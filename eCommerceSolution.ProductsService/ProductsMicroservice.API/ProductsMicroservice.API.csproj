@@ -4,18 +4,20 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>4faff494-4907-47a0-8cdf-2117036ef92c</UserSecretsId>
+		<UserSecretsId>9eb4fde5-86d0-44d1-a4c8-91772e8f482c</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\eCommerce.Core\eCommerce.Core.csproj" />
-		<ProjectReference Include="..\eCommerce.Infrastructure\eCommerce.Infrastructure.csproj" />
+		<ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
+		<ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
 	</ItemGroup>
 
 </Project>
