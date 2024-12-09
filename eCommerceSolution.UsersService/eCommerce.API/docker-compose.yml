@@ -1,0 +1,21 @@
+# users-service/docker-compose.yml
+version: '3.8'
+
+networks:
+  microservices-network:
+    external: true
+
+services:
+  usersmicroservice.api:
+    image: ${DOCKER_REGISTRY-}usersmicroservice.api
+    build:
+      context: ..
+      dockerfile: eCommerce.API/Dockerfile
+    ports:
+      - "8082:8080"
+    environment:
+      - ConnectionStrings__local=Server=microservices-db;Database=ecommerceusers;UserID=root;Password=Purejoy@123#;Port=3306;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - PORT=8080
+    networks:
+      - microservices-network

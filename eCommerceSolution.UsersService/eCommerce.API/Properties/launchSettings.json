@@ -3,8 +3,14 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQL_HOST": "localhost",
+        "MYSQL_DATABASE": "eCommerceUsers",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "Purejoy@123#",
+        "MYSQL_PORT": "3306"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5106"
@@ -14,10 +20,15 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQL_HOST": "localhost",
+        "MYSQL_DATABASE": "eCommerceUsers",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "Purejoy@123#",
+        "MYSQL_PORT": "3306"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7118;http://localhost:5106"
+      "applicationUrl": "https://localhost:7118"
     },
     "IIS Express": {
       "commandName": "IISExpress",

@@ -21,9 +21,14 @@ public static class DependencyInjection
         //caching and other low-level components.
 
         services.AddTransient<IUserService, UserService>();
+        
+        //FluentValidations
         services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
         services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
-
+        
+        //Mappers
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        
         return services;
     }
 }

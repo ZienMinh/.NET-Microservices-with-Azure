@@ -11,5 +11,4 @@ public class ApplicationUser
     public string? Password { get; set; }
     public string? PersonName { get; set; }
     public string? Gender { get; set; }
-
 }

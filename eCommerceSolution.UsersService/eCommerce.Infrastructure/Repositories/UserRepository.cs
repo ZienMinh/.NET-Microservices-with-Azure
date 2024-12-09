@@ -58,4 +58,14 @@ internal class UserRepository : IUserRepository
         //     Gender = GenderOptions.Male.ToString()
         // };
     }
+
+    public async Task<ApplicationUser?> GetUserByUserID(Guid? userID)
+    {
+        var query = "SELECT * FROM `ecommerceusers`.`Users` " + 
+                    "WHERE `UserID` = @UserID";
+        var parameters = new { UserID = userID };
+
+        using var connection = _context.DbConnection;
+        return await connection.QueryFirstOrDefaultAsync<ApplicationUser>(query, parameters);
+    }
 }

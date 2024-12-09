@@ -1,0 +1,51 @@
+# orders-service/docker-compose.yml
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mystrongpassword123
+    volumes:
+      - "D:/Udemy-Microservices/init.js:/docker-entrypoint-initdb.d/init.js"
+    networks:
+      - microservices-network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mystrongpassword123
+      ME_CONFIG_MONGODB_URL: mongodb://root:mystrongpassword123@mongo:27017/
+    depends_on:
+      - mongo
+    networks:
+      - microservices-network
+
+  ordersmicroservice.api:
+    image: ${DOCKER_REGISTRY-}ordersmicroservice.api
+    build:
+      context: ..
+      dockerfile: OrdersMicroservice.API/Dockerfile
+    ports:
+      - "8083:8080"
+    environment:
+      - MONGODB_HOST=mongo
+      - MONGODB_PORT=27017
+      - ASPNETCORE_ENVIRONMENT=Development
+      - PORT=8080
+    depends_on:
+      - mongo
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    external: true

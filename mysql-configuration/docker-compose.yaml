@@ -1,0 +1,23 @@
+# root mysql-configuration/docker-compose.yml
+version: '3.8'
+
+networks:
+  microservices-network:
+    external: true
+
+services:
+  microservices-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: "Purejoy@123#"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3307:3306"
+    networks:
+      - microservices-network
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql-data:

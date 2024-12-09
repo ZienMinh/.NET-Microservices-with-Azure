@@ -5,7 +5,12 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQL_HOST": "localhost",
+        "MYSQL_DATABASE": "eCommerceProducts",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "Purejoy@123#",
+        "MYSQL_PORT": "3306"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5268"
@@ -15,7 +20,12 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQL_HOST": "localhost",
+        "MYSQL_DATABASE": "eCommerceProducts",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "Purejoy@123#",
+        "MYSQL_PORT": "3306"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7193"
@@ -25,7 +35,12 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQL_HOST": "localhost",
+        "MYSQL_DATABASE": "eCommerceProducts",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "Purejoy@123#",
+        "MYSQL_PORT": "3306"
       }
     },
     "Container (Dockerfile)": {

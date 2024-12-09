@@ -1,0 +1,22 @@
+CREATE DATABASE IF NOT EXISTS ecommerceproducts;
+CREATE DATABASE IF NOT EXISTS ecommerceusers;
+
+USE ecommerceusers;
+
+CREATE TABLE IF NOT EXISTS Users (
+    UserID CHAR(36) PRIMARY KEY,
+    PersonName VARCHAR(50) NOT NULL NULL,
+    Email VARCHAR(100) NOT NULL NULL,
+    Password VARCHAR(255) NOT NULL NULL,
+    Gender VARCHAR(50) NOT NULL NULL
+);
+
+USE ecommerceproducts;
+
+CREATE TABLE IF NOT EXISTS Products (
+    ProductID CHAR(36) PRIMARY KEY,
+    ProductName VARCHAR(50) NOT NULL NULL,
+    Category VARCHAR(50) NOT NULL NULL,
+    UnitPrice DOUBLE NOT NULL NULL,
+    QuantityInStock INT NOT NULL NULL
+);

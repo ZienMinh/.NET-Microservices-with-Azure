@@ -19,14 +19,17 @@ public static class ProductAPIEndpoints
         });
 
         //GET /api/products/search/product-id
-        app.MapGet("/api/products/search/product-id/{ProductID:guid}", async (
+        app.MapGet("/api/products/search/product-id/{id:guid}", async (
             IProductsService productsService,
-            Guid ProductID) =>
+            Guid id) =>
         {
-            ProductResponse? products = await productsService.GetProductByCondition(
-                temp => temp.ProductID == ProductID);
+            ProductResponse? product = await productsService.GetProductByCondition(
+                temp => temp.ProductID == id);
 
-            return Results.Ok(products);
+            if (product == null)
+                return Results.NotFound();
+            
+            return Results.Ok(product);
         });
 
         //GET /api/products/search
@@ -35,18 +38,18 @@ public static class ProductAPIEndpoints
             string SearchString) =>
         {
             List<ProductResponse?> productsByProductName = await
-            productsService.GetProductsByCondition(
-                temp => temp.ProductName != null && temp.ProductName.Contains
-                (SearchString, StringComparison.OrdinalIgnoreCase));
+                productsService.GetProductsByCondition(
+                    temp => temp.ProductName != null && temp.ProductName.Contains
+                    (SearchString, StringComparison.OrdinalIgnoreCase));
 
             List<ProductResponse?> productsByCategory = await
-            productsService.GetProductsByCondition(
-                temp => temp.Category != null && temp.Category.
-                Contains(SearchString, StringComparison.OrdinalIgnoreCase));
+                productsService.GetProductsByCondition(
+                    temp => temp.Category != null && temp.Category.
+                    Contains(SearchString, StringComparison.OrdinalIgnoreCase));
 
-            var products = productsByProductName.Union(productsByCategory);
+            var product = productsByProductName.Union(productsByCategory);
 
-            return Results.Ok(products);
+            return Results.Ok(product);
         });
 
         //POST /api/products
@@ -106,11 +109,11 @@ public static class ProductAPIEndpoints
         });
 
         //DELETE /api/products
-        app.MapDelete("/api/products/{ProductID:guid}", async (
+        app.MapDelete("/api/products/{id:guid}", async (
             IProductsService productsService,
-            Guid ProductID) =>
+            Guid id) =>
         {
-            bool isDeleted = await productsService.DeleteProduct(ProductID);
+            bool isDeleted = await productsService.DeleteProduct(id);
             if (isDeleted)
                 return Results.Ok(true);
             else
