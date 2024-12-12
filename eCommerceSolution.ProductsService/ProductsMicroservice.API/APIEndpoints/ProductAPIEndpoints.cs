@@ -23,12 +23,15 @@ public static class ProductAPIEndpoints
             IProductsService productsService,
             Guid id) =>
         {
+            await Task.Delay(100);
+            throw new NotImplementedException();
+
             ProductResponse? product = await productsService.GetProductByCondition(
                 temp => temp.ProductID == id);
 
             if (product == null)
                 return Results.NotFound();
-            
+
             return Results.Ok(product);
         });
 
@@ -40,12 +43,12 @@ public static class ProductAPIEndpoints
             List<ProductResponse?> productsByProductName = await
                 productsService.GetProductsByCondition(
                     temp => temp.ProductName != null && temp.ProductName.Contains
-                    (SearchString, StringComparison.OrdinalIgnoreCase));
+                        (SearchString, StringComparison.OrdinalIgnoreCase));
 
             List<ProductResponse?> productsByCategory = await
                 productsService.GetProductsByCondition(
-                    temp => temp.Category != null && temp.Category.
-                    Contains(SearchString, StringComparison.OrdinalIgnoreCase));
+                    temp => temp.Category != null &&
+                            temp.Category.Contains(SearchString, StringComparison.OrdinalIgnoreCase));
 
             var product = productsByProductName.Union(productsByCategory);
 
@@ -65,9 +68,9 @@ public static class ProductAPIEndpoints
             if (!validationResult.IsValid)
             {
                 Dictionary<string, string[]> errors = validationResult.Errors.GroupBy(temp => temp.PropertyName)
-                .ToDictionary(grp => grp.Key, grp => grp
-                .Select(err => err.ErrorMessage)
-                .ToArray());
+                    .ToDictionary(grp => grp.Key, grp => grp
+                        .Select(err => err.ErrorMessage)
+                        .ToArray());
 
                 return Results.ValidationProblem(errors);
             }
@@ -75,7 +78,7 @@ public static class ProductAPIEndpoints
             var addedProductResponse = await productsService.AddProduct(productAddRequest);
             if (addedProductResponse != null)
                 return Results.Created($"/api/products/search/product-id/" +
-                    $"{addedProductResponse.ProductID}",
+                                       $"{addedProductResponse.ProductID}",
                     addedProductResponse);
             else
                 return Results.Problem("Error in adding product");
@@ -94,9 +97,9 @@ public static class ProductAPIEndpoints
             if (!validationResult.IsValid)
             {
                 Dictionary<string, string[]> errors = validationResult.Errors.GroupBy(temp => temp.PropertyName)
-                .ToDictionary(grp => grp.Key, grp => grp
-                .Select(err => err.ErrorMessage)
-                .ToArray());
+                    .ToDictionary(grp => grp.Key, grp => grp
+                        .Select(err => err.ErrorMessage)
+                        .ToArray());
 
                 return Results.ValidationProblem(errors);
             }

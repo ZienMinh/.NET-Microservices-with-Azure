@@ -1,5 +1,6 @@
 using BusinessLogicLayer;
 using BusinessLogicLayer.HttpClients;
+using BusinessLogicLayer.Policies;
 using DataAcessLayer;
 using FluentValidation.AspNetCore;
 using OrdersMicroservice.API.Middlewares;
@@ -24,16 +25,53 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(builder =>
     {
         builder.WithOrigins("http://localhost:4200")
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
-// UsersMicroservice Configuration
+builder.Services.AddTransient<IUsersMicroservicePolicies, UsersMicroservicePolicies>();
+builder.Services.AddTransient<IProductsMicroservicePolicies, ProductsMicroservicePolicies>();
+
+// UsersMicroservice HTTPClients and Fault Tolerance Configuration
 builder.Services.AddHttpClient<UsersMicroserviceClient>(client =>
-{
-    client.BaseAddress = new Uri($"http://{builder.Configuration["UsersMicroserviceName"]}:{builder.Configuration["UsersMicroservicePort"]}");
-});
+    {
+        client.BaseAddress = new Uri($"http://" +
+                                     $"{builder.Configuration["UsersMicroserviceName"]}:" +
+                                     $"{builder.Configuration["UsersMicroservicePort"]}");
+    })
+    .AddPolicyHandler(
+        builder.Services.BuildServiceProvider()
+            .GetRequiredService<IUsersMicroservicePolicies>()
+            .GetRetryPolicy())
+    .AddPolicyHandler(
+        builder.Services.BuildServiceProvider()
+            .GetRequiredService<IUsersMicroservicePolicies>()
+            .GetCircuitBreakerPolicy()
+    )
+    .AddPolicyHandler(
+        builder.Services.BuildServiceProvider()
+            .GetRequiredService<IUsersMicroservicePolicies>()
+            .GetTimeoutPolicy()
+    );
+
+// ProductsMicroservice HTTPClients Configuration
+builder.Services.AddHttpClient<ProductsMicroserviceClient>(client =>
+    {
+        client.BaseAddress = new Uri($"http://" +
+                                     $"{builder.Configuration["ProductsMicroserviceName"]}:" +
+                                     $"{builder.Configuration["ProductsMicroservicePort"]}");
+    })
+    .AddPolicyHandler(
+        builder.Services.BuildServiceProvider()
+            .GetRequiredService<IProductsMicroservicePolicies>()
+            .GetFallbackPolicy()
+    )
+    .AddPolicyHandler(
+        builder.Services.BuildServiceProvider()
+            .GetRequiredService<IProductsMicroservicePolicies>()
+            .GetBulkheadIsolationPolicy()
+    );
 
 var app = builder.Build();
 

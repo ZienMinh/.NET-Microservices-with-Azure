@@ -6,12 +6,14 @@ services:
     image: mongo
     restart: always
     ports:
-      - "27017:27017"
+      - "27018:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: mystrongpassword123
+      MONGO_INITDB_DATABASE: admin
     volumes:
       - "D:/Udemy-Microservices/init.js:/docker-entrypoint-initdb.d/init.js"
+      - mongodb_data:/data/db
     networks:
       - microservices-network
 
@@ -24,27 +26,35 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: mystrongpassword123
       ME_CONFIG_MONGODB_URL: mongodb://root:mystrongpassword123@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
     depends_on:
       - mongo
     networks:
       - microservices-network
-
+  
   ordersmicroservice.api:
     image: ${DOCKER_REGISTRY-}ordersmicroservice.api
     build:
       context: ..
       dockerfile: OrdersMicroservice.API/Dockerfile
     ports:
-      - "8083:8080"
+      - "7000:8080"
     environment:
       - MONGODB_HOST=mongo
       - MONGODB_PORT=27017
       - ASPNETCORE_ENVIRONMENT=Development
       - PORT=8080
+      - UsersMicroserviceName=usersmicroservice.api
+      - UsersMicroservicePort=8080
+      - ProductsMicroserviceName=productsmicroservice.api
+      - ProductsMicroservicePort=8080
     depends_on:
       - mongo
     networks:
       - microservices-network
+
+volumes:
+  mongodb_data:
 
 networks:
   microservices-network:

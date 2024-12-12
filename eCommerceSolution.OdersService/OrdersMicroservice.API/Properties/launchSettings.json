@@ -10,7 +10,9 @@
         "MONGODB_PORT": "27017",
         "MONGODB_DATABASE": "OrdersDatabase",
         "UsersMicroserviceName": "localhost",
-        "UsersMicroservicePort": "8082"
+        "UsersMicroservicePort": "5000",
+        "ProductsMicroserviceName": "localhost",
+        "ProductsMicroservicePort": "9000"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5082"
@@ -25,7 +27,9 @@
         "MONGODB_PORT": "27017",
         "MONGODB_DATABASE": "OrdersDatabase",
         "UsersMicroserviceName": "localhost",
-        "UsersMicroservicePort": "8082"
+        "UsersMicroservicePort": "5000",
+        "ProductsMicroserviceName": "localhost",
+        "ProductsMicroservicePort": "9000"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7123;http://localhost:5082"
@@ -38,7 +42,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MONGODB_DATABASE": "OrdersDatabase",
         "UsersMicroserviceName": "localhost",
-        "UsersMicroservicePort": "8082"
+        "UsersMicroservicePort": "5000",
+        "ProductsMicroserviceName": "localhost",
+        "ProductsMicroservicePort": "9000"
       }
     },
     "Container (Dockerfile)": {
@@ -50,7 +56,9 @@
         "ASPNETCORE_HTTP_PORTS": "8080",
         "MONGODB_DATABASE": "OrdersDatabase",
         "UsersMicroserviceName": "localhost",
-        "UsersMicroservicePort": "8082"
+        "UsersMicroservicePort": "5000",
+        "ProductsMicroserviceName": "localhost",
+        "ProductsMicroservicePort": "9000"
       },
       "publishAllPorts": true,
       "useSSL": true
